@@ -57,8 +57,8 @@ function accelerate(wishdir, wishSpeed, accel){
     if(addspeed <= 0)
         return;
     accelspeed = accel * wishSpeed;
-    if(accelspeed > addspeed)
-        accelspeed = addspeed;
+	if(accelspeed > addspeed) 
+		accelspeed = addspeed;
 
     hopper.velocity.x += accelspeed * wishdir.x;
     hopper.velocity.y += accelspeed * wishdir.y;

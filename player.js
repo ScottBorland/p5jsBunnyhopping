@@ -3,8 +3,8 @@ let angle = 0;
 var moveSpeed = 5; 
 var gravity = 10;
 var friction = 0.2;
-var runAcceleration = 40;
-var runDeacceleration = 10;
+var runAcceleration = 0.04;
+var runDeacceleration = 0.1;
 
 
 class Player {
