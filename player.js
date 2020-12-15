@@ -8,6 +8,8 @@ var friction = 0.2;
 var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
 
+var playerSize = 3;
+
 
 class Player {
     constructor(x, y, z) {
@@ -16,31 +18,26 @@ class Player {
       this.acc = createVector(0, 0, 0);
     }
     drawPlayer(){
-        ellipse(this.position.x, this.position.y, 30)
+        let blue = color(48, 71, 94);
+        let red = color	(240, 84, 84);
+        fill(blue)
+        //ellipse(this.position.x, this.position.y, 30)
         push();
         translate(this.position.x, this.position.y);
         rotate(angle);
-        //console.log(this.velocity.heading());
-
-        fill(0, 0, 0);
+        
+        fill(red);
         stroke(0, 0, 0);
         strokeWeight(0.75);
 
         beginShape();
-        vertex(0, -5);
-        vertex(-2.5, 5);
-        vertex(2.5, 5);
+        vertex(0, -10 * playerSize);
+        vertex(-5 * playerSize, 10 * playerSize);
+        vertex(5 * playerSize, 10 * playerSize);
         endShape(CLOSE);
         pop();
     }
-    // rotate(){
-    //     var v1 = createVector(this.x, this.y);
-    //     var v2 = createVector(mouseX, mouseY);
-    //     var diff = p5.Vector.sub(v2, v1);
-    //     var origin = createVector(0, 0);
-    //     angle = Math.atan2(diff.y - origin.y, diff.x - origin.x);
-    //     angle += PI/2;
-    // }
+   
     update(){
         this.position.add(this.velocity);
         //translate(hopper.position.x-450, hopper.position.y-450);   

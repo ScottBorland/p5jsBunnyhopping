@@ -3,14 +3,20 @@ var hopper;
 var horizontalInput = 0;
 var verticalInput = 0;
 
+
+
 function setup() {
+	drawGrid();
+	let black = color(34, 40, 49)
 	createCanvas(900, 900);
-	hopper = new Player(0, 0)
+	hopper = new Player(800, 800)
 }
 
 function draw() {
-	
-	background(220);
+	//Colour palette
+	let black = color(34, 40, 49);
+	let blue = color(48, 71, 94);
+	background(140);
 	push();
 	translate(-hopper.position.x+450, -hopper.position.y+450);
 	drawGrid();
@@ -23,12 +29,13 @@ function draw() {
 }
 
 function drawGrid(){
-	for (var x = 0; x < width; x += width / 20) {
-		for (var y = 0; y < height; y += height / 20) {
-			stroke(0);
-			strokeWeight(1);
-			line(x, 0, x, height);
-			line(0, y, width, y);
+	
+	for(var i = 0; i < 10; i ++){
+		for(var j = 0; j < 10; j++){
+		push()
+		strokeWeight(5);
+		point(i*500, j*500, 10);
+		pop();
 		}
 	}
 }
