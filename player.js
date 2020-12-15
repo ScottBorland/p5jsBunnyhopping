@@ -1,4 +1,6 @@
 var angle = 0;
+var realMouseX = 0;
+var realMouseY = 0;
 //physics variables
 var moveSpeed = 5; 
 var gravity = 10;
@@ -40,8 +42,12 @@ class Player {
     //     angle += PI/2;
     // }
     update(){
-        this.position.add(this.velocity)    
-        angle = atan2(mouseY - this.position.y, mouseX - this.position.x) + (PI/2)
+        this.position.add(this.velocity);
+        //translate(hopper.position.x-450, hopper.position.y-450);   
+        realMouseX = mouseX - (-this.position.x+450);
+        realMouseY = mouseY - (-this.position.y+450);
+        angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
+        line(this.position.x, this.position.y, realMouseX, realMouseY);
         
     }
     groundMove(){

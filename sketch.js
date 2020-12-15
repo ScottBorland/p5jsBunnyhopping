@@ -5,17 +5,21 @@ var verticalInput = 0;
 
 function setup() {
 	createCanvas(900, 900);
-	hopper = new Player(500, 500)
+	hopper = new Player(0, 0)
 }
 
 function draw() {
+	
 	background(220);
+	push();
+	translate(-hopper.position.x+450, -hopper.position.y+450);
 	drawGrid();
 	handleInput();
 	
 	hopper.drawPlayer();
 	hopper.groundMove();
 	hopper.update();
+	pop();
 }
 
 function drawGrid(){
