@@ -18,6 +18,7 @@ class Player {
         push();
         translate(this.position.x, this.position.y);
         rotate(angle);
+        //console.log(this.velocity.heading());
 
         fill(0, 0, 0);
         stroke(0, 0, 0);
@@ -39,7 +40,11 @@ class Player {
     //     angle += PI/2;
     // }
     update(){
-        this.position.add(this.velocity)
+        this.position.add(this.velocity)    
+        if(this.velocity.mag() != 0){
+            angle = this.velocity.heading();
+            angle += PI/2;
+        }
     }
     groundMove(){
         let wishdir = createVector(horizontalInput, verticalInput, 0);
