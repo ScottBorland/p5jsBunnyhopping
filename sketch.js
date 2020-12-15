@@ -30,16 +30,16 @@ function drawGrid(){
 }
 
 function handleInput(){
-	if(keyIsDown(RIGHT_ARROW)){
+	if(keyIsDown(68)){
 		horizontalInput = 1;
-	}else if(keyIsDown(LEFT_ARROW)){
+	}else if(keyIsDown(65)){
 		horizontalInput = -1;
 	}else{
 		horizontalInput = 0;
 	}
-	if(keyIsDown(UP_ARROW)){
+	if(keyIsDown(87)){
 		verticalInput = -1;
-	}else if(keyIsDown(DOWN_ARROW)){
+	}else if(keyIsDown(83)){
 		verticalInput = 1;
 	}else{
 		verticalInput = 0;

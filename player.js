@@ -3,7 +3,7 @@ var angle = 0;
 var moveSpeed = 5; 
 var gravity = 10;
 var friction = 0.2;
-var runAcceleration = 0.04;
+var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
 
 
@@ -42,14 +42,18 @@ class Player {
     update(){
         this.position.add(this.velocity)    
         angle = atan2(mouseY - this.position.y, mouseX - this.position.x) + (PI/2)
-        //console.log(angle);
-        //angle = 0; 
-        //angle = this.velocity.heading();
-        //angle += PI/2;
-        //angle = targetAngle;
+        
     }
     groundMove(){
         let wishdir = createVector(horizontalInput, verticalInput, 0);
+        
+        //Make wishdir relative
+        if(wishdir.mag() != 0){
+        var wishdirToAngle = wishdir.heading();
+        var sumAngle = wishdirToAngle + angle;
+        wishdir = p5.Vector.fromAngle(sumAngle);
+        }
+
         applyFriction(1);
         wishdir.normalize(); 
         var wishSpeed = wishdir.mag();
