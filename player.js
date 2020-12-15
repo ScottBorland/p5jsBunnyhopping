@@ -1,4 +1,4 @@
-let angle = 0;
+var angle = 0;
 //physics variables
 var moveSpeed = 5; 
 var gravity = 10;
@@ -41,10 +41,12 @@ class Player {
     // }
     update(){
         this.position.add(this.velocity)    
-        if(this.velocity.mag() != 0){
-            angle = this.velocity.heading();
-            angle += PI/2;
-        }
+        angle = atan2(mouseY - this.position.y, mouseX - this.position.x) + (PI/2)
+        //console.log(angle);
+        //angle = 0; 
+        //angle = this.velocity.heading();
+        //angle += PI/2;
+        //angle = targetAngle;
     }
     groundMove(){
         let wishdir = createVector(horizontalInput, verticalInput, 0);
