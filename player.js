@@ -8,8 +8,15 @@ var friction = 0.2;
 var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
 
+var airAcceleration = 2;          // Air accel
+var airDecceleration = 2;         // Deacceleration experienced when ooposite strafing
+var airControl = 0.3;               // How precise air control is
+var sideStrafeAcceleration = 50;  // How fast acceleration occurs to get up to sideStrafeSpeed when
+var sideStrafeSpeed = 1.0; 
+
 var jumpSpeed = 50;
 var wishJump = false; 
+
 
 var playerSize = 3;
 
@@ -50,12 +57,14 @@ class Player {
         realMouseX = mouseX - (-this.position.x+450);
         realMouseY = mouseY - (-this.position.y+450);
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
-        line(this.position.x, this.position.y, realMouseX, realMouseY);
+        //line(this.position.x, this.position.y, realMouseX, realMouseY);
         if(this.position.z <= 0){
             this.grounded = true;
             this.position.z = 0;
+            this.groundMove();
         }else{
             this.grounded = false;
+            this.airMove();
         }
         
     }
@@ -68,21 +77,63 @@ class Player {
         var sumAngle = wishdirToAngle + angle;
         wishdir = p5.Vector.fromAngle(sumAngle);
         }
-
-        applyFriction(1);
+        if(!wishJump){
+            applyFriction(1);
+        }
         wishdir.normalize(); 
         var wishSpeed = wishdir.mag();
         wishSpeed *= moveSpeed;
         wishdir.normalize();
-        var moveDirectionNorm = wishdir;
+        moveDirectionNorm = wishdir;
         
         accelerate(wishdir, wishSpeed, runAcceleration)
 
+        this.velocity.z -= gravity;
         if(wishJump)
         {
             this.velocity.z = jumpSpeed;
             wishJump = false;
+        }     
+    }
+    airMove()
+    {
+        var wishdir;
+        var wishvel = airAcceleration;
+        var accel;
+
+        wishdir =  createVector(horizontalInput, verticalInput, 0);
+        if(wishdir.mag() != 0){
+            var wishdirToAngle = wishdir.heading();
+            var sumAngle = wishdirToAngle + angle;
+            wishdir = p5.Vector.fromAngle(sumAngle);
         }
+
+        var wishspeed = wishdir.mag();
+        wishspeed *= moveSpeed;
+
+        wishdir.normalize();
+        moveDirectionNorm = wishdir;
+
+        // CPM: Aircontrol
+        var wishspeed2 = wishspeed;
+        if (p5.Vector.dot(this.velocity, wishdir) < 0)
+            accel = airDecceleration;
+        else
+            accel = airAcceleration;
+        // If the player is ONLY strafing left or right
+        if(verticalInput == 0 && horizontalInput != 0)
+        {
+            if(wishspeed > sideStrafeSpeed)
+                wishspeed = sideStrafeSpeed;
+            accel = sideStrafeAcceleration;
+        }
+
+        accelerate(wishdir, wishspeed, accel);
+        // if(airControl > 0)
+        //     AirControl(wishdir, wishspeed2);
+        // !CPM: Aircontrol
+
+        // Apply gravity
         this.velocity.z -= gravity;
     }
   }

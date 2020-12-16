@@ -3,11 +3,12 @@ var hopper;
 var horizontalInput = 0;
 var verticalInput = 0;
 
-
+var moveDirectionNorm;
 
 function setup() {
 	drawGrid();
 	let black = color(34, 40, 49)
+	moveDirectionNorm = createVector(0, 0, 0);
 	createCanvas(900, 900);
 	hopper = new Player(800, 800)
 }
@@ -19,11 +20,11 @@ function draw() {
 	background(140);
 	push();
 	translate(-hopper.position.x+450, -hopper.position.y+450);
+	//rotate(angle);
 	drawGrid();
 	handleInput();
 	
 	hopper.drawPlayer();
-	hopper.groundMove();
 	hopper.update();
 	pop();
 }
@@ -57,7 +58,6 @@ function handleInput(){
 	}
 
 	if(keyIsDown(32) && hopper.grounded){
-		console.log("yep")
 		wishJump = true;
 	}
 }
