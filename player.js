@@ -3,10 +3,13 @@ var realMouseX = 0;
 var realMouseY = 0;
 //physics variables
 var moveSpeed = 5; 
-var gravity = 10;
+var gravity = 1;
 var friction = 0.2;
 var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
+
+var jumpSpeed = 50;
+var wishJump = false; 
 
 var playerSize = 3;
 
@@ -16,6 +19,7 @@ class Player {
       this.position = createVector(x, y, z)
       this.velocity = createVector(0, 0, 0);
       this.acc = createVector(0, 0, 0);
+      this.grounded = true;
     }
     drawPlayer(){
         let blue = color(48, 71, 94);
@@ -26,9 +30,11 @@ class Player {
         translate(this.position.x, this.position.y);
         rotate(angle);
         
-        fill(red);
+        if(this.position.z == 0){fill (red)} else {fill(red)}
+        //fill(red);
         stroke(0, 0, 0);
         strokeWeight(0.75);
+        playerSize = calcSize(this.position.z, 3);
 
         beginShape();
         vertex(0, -10 * playerSize);
@@ -45,6 +51,12 @@ class Player {
         realMouseY = mouseY - (-this.position.y+450);
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
         line(this.position.x, this.position.y, realMouseX, realMouseY);
+        if(this.position.z <= 0){
+            this.grounded = true;
+            this.position.z = 0;
+        }else{
+            this.grounded = false;
+        }
         
     }
     groundMove(){
@@ -66,8 +78,12 @@ class Player {
         
         accelerate(wishdir, wishSpeed, runAcceleration)
 
-        //playerVelocity.y = -gravity * Time.deltaTime;
-
+        if(wishJump)
+        {
+            this.velocity.z = jumpSpeed;
+            wishJump = false;
+        }
+        this.velocity.z -= gravity;
     }
   }
 

@@ -55,6 +55,11 @@ function handleInput(){
 	}else{
 		verticalInput = 0;
 	}
+
+	if(keyIsDown(32) && hopper.grounded){
+		console.log("yep")
+		wishJump = true;
+	}
 }
 
 function accelerate(wishdir, wishSpeed, accel){
@@ -99,6 +104,10 @@ function applyFriction(t){
 
     hopper.velocity.x *= newSpeed;
     hopper.velocity.y *= newSpeed;
+}
+
+function calcSize(height, size){
+	return (size + (height * 0.001));
 }
 
 
