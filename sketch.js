@@ -15,7 +15,7 @@ function setup() {
 	drawGrid();
 	let black = color(34, 40, 49)
 	moveDirectionNorm = createVector(0, 0, 0);
-	createCanvas(900, 900);
+	createCanvas(windowWidth, windowHeight);
 	hopper = new Player(800, 800)
 }
 
@@ -23,13 +23,14 @@ function draw() {
 	//Colour palette
 	let black = color(34, 40, 49);
 	let blue = color(48, 71, 94);
-	if(hopper.grounded){
-		background(140);
-	}else{
-		background(150);
-	}
+	// if(hopper.grounded){
+	// 	background(140);
+	// }else{
+	// 	background(150);
+	// }
+	background(240);
 	push();
-	translate(-hopper.position.x+450, -hopper.position.y+450);
+	translate(-hopper.position.x+(windowWidth/2), -hopper.position.y+(windowHeight/2));
 	//rotate(angle);
 	drawGrid();
 	handleInput();
@@ -117,7 +118,7 @@ function applyFriction(t){
 }
 
 function calcSize(height, size){
-	return (size + (height * 0.003));
+	return (size + (height * 0.06));
 }
 
 

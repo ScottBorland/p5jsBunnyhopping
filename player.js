@@ -2,19 +2,19 @@ var angle = 0;
 var realMouseX = 0;
 var realMouseY = 0;
 //physics variables
-var moveSpeed = 5; 
-var gravity = 13;
-var friction = 2;
-var runAcceleration = 0.4;
-var runDeacceleration = 0.1;
+var moveSpeed = 7; 
+var gravity = 20;
+var friction = 6;
+var runAcceleration = 14;
+var runDeacceleration = 10;
 
-var airAcceleration = 0.2;          // Air accel
+var airAcceleration = 2;          // Air accel
 var airDecceleration = 2;         // Deacceleration experienced when ooposite strafing
-var airControl = 3;               // How precise air control is
+var airControl = 0.3;               // How precise air control is
 var sideStrafeAcceleration = 50;  // How fast acceleration occurs to get up to sideStrafeSpeed when
 var sideStrafeSpeed = 1.0; 
 
-var jumpSpeed = 50;
+var jumpSpeed = 8;
 var wishJump = false; 
 
 
@@ -58,8 +58,8 @@ class Player {
     update(){
         this.position.add(this.velocity);
         //translate(hopper.position.x-450, hopper.position.y-450);   
-        realMouseX = mouseX - (-this.position.x+450);
-        realMouseY = mouseY - (-this.position.y+450);
+        realMouseX = mouseX - (-this.position.x+(windowWidth/2));
+        realMouseY = mouseY - (-this.position.y+(windowHeight/2));
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
         //line(this.position.x, this.position.y, realMouseX, realMouseY);
         if(this.position.z <= 0){
