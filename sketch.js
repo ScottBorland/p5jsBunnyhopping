@@ -16,7 +16,7 @@ function setup() {
 	let black = color(34, 40, 49)
 	moveDirectionNorm = createVector(0, 0, 0);
 	createCanvas(windowWidth, windowHeight);
-	hopper = new Player(800, 800)
+	hopper = new Player(10000, 10000)
 }
 
 function draw() {
@@ -45,7 +45,7 @@ function drawGrid(){
 		for(var j = 0; j < 20; j++){
 		push()
 		strokeWeight(5);
-		point(i*500, j*500, 10);
+		point(i*800, j*800, 5);
 		pop();
 		}
 	}
@@ -117,7 +117,7 @@ function applyFriction(t){
 }
 
 function calcSize(height, size){
-	return (size + (height * 0.06));
+	return (size + (height * 0.1));
 }
 
 
