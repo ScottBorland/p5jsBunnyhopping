@@ -3,7 +3,7 @@ var realMouseX = 0;
 var realMouseY = 0;
 //physics variables
 var moveSpeed = 5; 
-var gravity = 1;
+var gravity = 3;
 var friction = 0.2;
 var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
@@ -37,7 +37,7 @@ class Player {
         translate(this.position.x, this.position.y);
         rotate(angle);
         
-        if(this.position.z == 0){fill (red)} else {fill(red)}
+        if(this.position.z == 0){fill (blue)} else {fill(red)}
         //fill(red);
         stroke(0, 0, 0);
         strokeWeight(0.75);
@@ -129,12 +129,46 @@ class Player {
         }
 
         accelerate(wishdir, wishspeed, accel);
-        // if(airControl > 0)
-        //     AirControl(wishdir, wishspeed2);
+        if(airControl > 0)
+            this.AirControl(wishdir, wishspeed2);
         // !CPM: Aircontrol
 
         // Apply gravity
         this.velocity.z -= gravity;
+    }
+    AirControl(wishdir, wishspeed){
+        var yspeed;
+        var speed;
+        var dot;
+        var k;
+
+        // Can't control movement if not moving forward or backward
+        if(Math.abs(verticalInput) < 0.001 || Math.abs(wishspeed) < 0.001)
+            return;
+        yspeed = this.velocity.z;
+        this.velocity.y = 0;
+        /* Next two lines are equivalent to idTech's VectorNormalize() */
+        speed = this.velocity.mag();
+        this.velocity.normalize();
+
+        dot = p5.Vector.dot(this.velocity, wishdir);
+        k = 32;
+        k *= airControl * dot * dot;
+
+        // Change direction while slowing down
+        if (dot > 0)
+        {
+            this.velocity.x = this.velocity.x * speed + wishdir.x * k;
+            this.velocity.y = this.velocity.y * speed + wishdir.y * k;
+            this.velocity.z = this.velocity.z * speed + wishdir.z * k;
+
+            this.velocity.normalize();
+            moveDirectionNorm = this.velocity;
+        }
+
+        this.velocity.x *= speed;
+        this.velocity.z = yspeed; // Note this line
+        this.velocity.y *= speed;
     }
   }
 
