@@ -3,14 +3,14 @@ var realMouseX = 0;
 var realMouseY = 0;
 //physics variables
 var moveSpeed = 5; 
-var gravity = 3;
-var friction = 0.2;
+var gravity = 13;
+var friction = 2;
 var runAcceleration = 0.4;
 var runDeacceleration = 0.1;
 
-var airAcceleration = 2;          // Air accel
+var airAcceleration = 0.2;          // Air accel
 var airDecceleration = 2;         // Deacceleration experienced when ooposite strafing
-var airControl = 0.3;               // How precise air control is
+var airControl = 3;               // How precise air control is
 var sideStrafeAcceleration = 50;  // How fast acceleration occurs to get up to sideStrafeSpeed when
 var sideStrafeSpeed = 1.0; 
 
@@ -45,7 +45,7 @@ class Player {
         
         imageMode(CENTER);
         image(playerImage, -0, -10, 10 * playerSize, 10 * playerSize);
-        ellipse(0, 0, 20)
+        //ellipse(0, 0, 20)
         //line(-40, -40, realMouseX, realMouseY);
         // beginShape();
         // vertex(0, -10 * playerSize);
@@ -61,7 +61,7 @@ class Player {
         realMouseX = mouseX - (-this.position.x+450);
         realMouseY = mouseY - (-this.position.y+450);
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
-        line(this.position.x, this.position.y, realMouseX, realMouseY);
+        //line(this.position.x, this.position.y, realMouseX, realMouseY);
         if(this.position.z <= 0){
             this.grounded = true;
             this.position.z = 0;
@@ -150,7 +150,7 @@ class Player {
         if(Math.abs(verticalInput) < 0.001 || Math.abs(wishspeed) < 0.001)
             return;
         yspeed = this.velocity.z;
-        this.velocity.y = 0;
+        this.velocity.z = 0;
         /* Next two lines are equivalent to idTech's VectorNormalize() */
         speed = this.velocity.mag();
         this.velocity.normalize();

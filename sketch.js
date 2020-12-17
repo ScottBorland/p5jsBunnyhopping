@@ -23,7 +23,11 @@ function draw() {
 	//Colour palette
 	let black = color(34, 40, 49);
 	let blue = color(48, 71, 94);
-	background(140);
+	if(hopper.grounded){
+		background(140);
+	}else{
+		background(150);
+	}
 	push();
 	translate(-hopper.position.x+450, -hopper.position.y+450);
 	//rotate(angle);
@@ -37,8 +41,8 @@ function draw() {
 
 function drawGrid(){
 	
-	for(var i = 0; i < 10; i ++){
-		for(var j = 0; j < 10; j++){
+	for(var i = 0; i < 20; i ++){
+		for(var j = 0; j < 20; j++){
 		push()
 		strokeWeight(5);
 		point(i*500, j*500, 10);
