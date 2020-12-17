@@ -5,6 +5,12 @@ var verticalInput = 0;
 
 var moveDirectionNorm;
 
+let playerImage;
+
+function preload(){
+	playerImage = loadImage('resources/player.png');
+}
+
 function setup() {
 	drawGrid();
 	let black = color(34, 40, 49)
@@ -107,7 +113,7 @@ function applyFriction(t){
 }
 
 function calcSize(height, size){
-	return (size + (height * 0.001));
+	return (size + (height * 0.003));
 }
 
 

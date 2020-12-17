@@ -18,7 +18,7 @@ var jumpSpeed = 50;
 var wishJump = false; 
 
 
-var playerSize = 3;
+var playerSize = 10;
 
 
 class Player {
@@ -41,13 +41,17 @@ class Player {
         //fill(red);
         stroke(0, 0, 0);
         strokeWeight(0.75);
-        playerSize = calcSize(this.position.z, 3);
-
-        beginShape();
-        vertex(0, -10 * playerSize);
-        vertex(-5 * playerSize, 10 * playerSize);
-        vertex(5 * playerSize, 10 * playerSize);
-        endShape(CLOSE);
+        playerSize = calcSize(this.position.z, 10);
+        
+        imageMode(CENTER);
+        image(playerImage, -0, -10, 10 * playerSize, 10 * playerSize);
+        ellipse(0, 0, 20)
+        //line(-40, -40, realMouseX, realMouseY);
+        // beginShape();
+        // vertex(0, -10 * playerSize);
+        // vertex(-5 * playerSize, 10 * playerSize);
+        // vertex(5 * playerSize, 10 * playerSize);
+        // endShape(CLOSE);
         pop();
     }
    
@@ -57,7 +61,7 @@ class Player {
         realMouseX = mouseX - (-this.position.x+450);
         realMouseY = mouseY - (-this.position.y+450);
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
-        //line(this.position.x, this.position.y, realMouseX, realMouseY);
+        line(this.position.x, this.position.y, realMouseX, realMouseY);
         if(this.position.z <= 0){
             this.grounded = true;
             this.position.z = 0;
