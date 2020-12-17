@@ -117,7 +117,7 @@ function applyFriction(t){
 }
 
 function calcSize(height, size){
-	return (size + (height * 0.1));
+	return (size + (height * 0.01));
 }
 
 

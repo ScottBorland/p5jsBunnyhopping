@@ -3,7 +3,7 @@ var realMouseX = 0;
 var realMouseY = 0;
 //physics variables
 var moveSpeed = 7; 
-var gravity = 20;
+var gravity = 0.2;
 var friction = 6;
 var runAcceleration = 14;
 var runDeacceleration = 10;
@@ -87,6 +87,8 @@ class Player {
         }
         if(!wishJump){
             applyFriction(1);
+        }else{
+            applyFriction(0.02);
         }
         wishdir.normalize(); 
         var wishSpeed = wishdir.mag();
@@ -108,7 +110,7 @@ class Player {
         var wishdir;
         var wishvel = airAcceleration;
         var accel;
-
+        handleInput();
         wishdir =  createVector(horizontalInput, verticalInput, 0);
         if(wishdir.mag() != 0){
             var wishdirToAngle = wishdir.heading();
@@ -149,13 +151,13 @@ class Player {
         var speed;
         var dot;
         var k;
-
         // Can't control movement if not moving forward or backward
-        if(Math.abs(verticalInput) < 0.001 || Math.abs(wishspeed) < 0.001)
+        if(Math.abs(verticalInput) < 0.001 || Math.abs(wishspeed) < 0.001){
             return;
+        }
         yspeed = this.velocity.z;
         this.velocity.z = 0;
-        /* Next two lines are equivalent to idTech's VectorNormalize() */
+        
         speed = this.velocity.mag();
         this.velocity.normalize();
 
