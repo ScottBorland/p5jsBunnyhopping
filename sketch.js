@@ -28,13 +28,12 @@ function draw() {
 	// }else{
 	// 	background(150);
 	// }
-	background(240);
+	background(200);
 	push();
 	translate(-hopper.position.x+(windowWidth/2), -hopper.position.y+(windowHeight/2));
 	//rotate(angle);
 	drawGrid();
 	handleInput();
-	
 	hopper.drawPlayer();
 	hopper.update();
 	pop();

@@ -17,7 +17,7 @@ var sideStrafeSpeed = 1.0;
 var jumpSpeed = 8;
 var wishJump = false; 
 
-
+var topSpeed = 0;
 var playerSize = 10;
 
 
@@ -56,6 +56,11 @@ class Player {
     }
    
     update(){
+        var vel = createVector(this.velocity.x, this.velocity.y);
+        if(vel.mag() > topSpeed){
+            topSpeed = vel.mag().toFixed(2);
+        }
+        this.displayHUD();
         this.position.add(this.velocity);
         //translate(hopper.position.x-450, hopper.position.y-450);   
         realMouseX = mouseX - (-this.position.x+(windowWidth/2));
@@ -70,7 +75,6 @@ class Player {
             this.grounded = false;
             this.airMove();
         }
-        
     }
     groundMove(){
         let wishdir = createVector(horizontalInput, verticalInput, 0);
@@ -92,7 +96,7 @@ class Player {
         
         accelerate(wishdir, wishSpeed, runAcceleration)
 
-        this.velocity.z -= gravity;
+        this.velocity.z = 0;
         if(wishJump)
         {
             this.velocity.z = jumpSpeed;
@@ -173,6 +177,12 @@ class Player {
         this.velocity.x *= speed;
         this.velocity.z = yspeed; // Note this line
         this.velocity.y *= speed;
+    }
+    displayHUD(){
+        textSize(20);
+        var vel = createVector(this.velocity.x, this.velocity.y);
+        text("Speed: " + vel.mag().toFixed(2), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 50 - (-this.position.y+(windowHeight/2)));
+        text("Top Speed: " + topSpeed, (windowWidth-200) - (-this.position.x+(windowWidth/2)), 80 - (-this.position.y+(windowHeight/2)));
     }
   }
 
