@@ -1,9 +1,14 @@
 var hopper;
+let platforms= [];
+var platform;
+var platGap = 800;
 
 var horizontalInput = 0;
 var verticalInput = 0;
 
 var moveDirectionNorm;
+
+var colliding = false;
 
 let playerImage;
 
@@ -12,31 +17,60 @@ function preload(){
 }
 
 function setup() {
-	drawGrid();
+	//drawGrid();
 	let black = color(34, 40, 49)
 	moveDirectionNorm = createVector(0, 0, 0);
 	createCanvas(windowWidth, windowHeight);
-	hopper = new Player(10000, 10000)
+	hopper = new Player(0, -100);
+	//var newPlatform = new Platform(i * random(100), i*random(100), 0, random(10, 1000), random(10, 1000));
+	platforms.push(new Platform(-100, -200, 0, 400, 400));
+	for(var j = 1; j < 10; j++){
+		platforms.push(new Platform(-300, -100-(j*platGap), 0, 300, 300));
+		platforms.push(new Platform(200, -500-(j*platGap), 0, 300, 300));
+	}
+		
+		// platforms.push(new Platform(-100, -1900, 0, 200, 200));
+		// platforms.push(new Platform(-500, -100, 0, 200, 200));
+		// platforms.push(new Platform(-800, -800, 0, 200, 200));
+		// platforms.push(new Platform(-1000, -1500, 0, 200, 200));
+		// platforms.push(new Platform(300, -1900, 0, 200, 200));
+		// for(var i = 0; i < 5; i++){
+
+		// }
+		//platforms.push(newPlatform);
+	
 }
 
 function draw() {
 	//Colour palette
 	let black = color(34, 40, 49);
 	let blue = color(48, 71, 94);
-	// if(hopper.grounded){
-	// 	background(140);
-	// }else{
-	// 	background(150);
-	// }
-	background(200);
+	
+	background(255);
+	push();
+	translate(-hopper.position.x+(windowWidth/2), -hopper.position.y+(windowHeight/2))
+	for(var i = 0; i < platforms.length; i++){
+		platforms[i].show();
+	}
+	if(hopper.grounded) {
+		colliding = false;
+		for(var i = 0; i < platforms.length; i ++){
+			if(hopper.checkCollision(platforms[i])){
+				colliding = true;
+			}
+		}	
+		
+	}
+	pop();
 	push();
 	translate(-hopper.position.x+(windowWidth/2), -hopper.position.y+(windowHeight/2));
 	//rotate(angle);
-	drawGrid();
 	handleInput();
 	hopper.drawPlayer();
 	hopper.update();
+
 	pop();
+	
 }
 
 function drawGrid(){
@@ -117,7 +151,7 @@ function applyFriction(t){
 }
 
 function calcSize(height, size){
-	return (size + (height * 0.01));
+	return (size + (height * 0.02));
 }
 
 

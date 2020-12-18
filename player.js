@@ -45,14 +45,29 @@ class Player {
         
         imageMode(CENTER);
         image(playerImage, -0, -10, 10 * playerSize, 10 * playerSize);
-        //ellipse(0, 0, 20)
-        //line(-40, -40, realMouseX, realMouseY);
-        // beginShape();
-        // vertex(0, -10 * playerSize);
-        // vertex(-5 * playerSize, 10 * playerSize);
-        // vertex(5 * playerSize, 10 * playerSize);
-        // endShape(CLOSE);
         pop();
+    }
+    hitbox(){
+        let blue = color(48, 71, 94);
+        let red = color	(240, 84, 84);
+        fill(blue)
+        push();
+        translate(this.position.x, this.position.y);
+        rotate(angle);
+        
+        stroke(0, 0, 0);
+        strokeWeight(0.75);
+        playerSize = calcSize(this.position.z, 10);
+        rectMode(CORNER)
+        noFill();
+        //hitbox
+        //rect(-5*playerSize, -5*playerSize, 10 * playerSize, 10 * playerSize);
+        pop();
+    }
+    checkCollision(platform){
+      var hit = false;
+      hit = collideRectRect(this.position.x + (-5*playerSize), this.position.y + (-5*playerSize), 10 * playerSize, 10 * playerSize, platform.x, platform.y, platform.w, platform.h);  
+      return hit;
     }
    
     update(){
@@ -61,17 +76,21 @@ class Player {
             topSpeed = vel.mag().toFixed(2);
         }
         this.displayHUD();
+        this.hitbox();
         this.position.add(this.velocity);
         //translate(hopper.position.x-450, hopper.position.y-450);   
         realMouseX = mouseX - (-this.position.x+(windowWidth/2));
         realMouseY = mouseY - (-this.position.y+(windowHeight/2));
         angle = atan2(realMouseY - this.position.y, realMouseX - this.position.x) + (PI/2);
         //line(this.position.x, this.position.y, realMouseX, realMouseY);
-        if(this.position.z <= 0){
+        if(this.position.z <= 0 && colliding){
             this.grounded = true;
             this.position.z = 0;
             this.groundMove();
-        }else{
+        }else if(this.position.z < 0){
+            location.reload();
+        }
+        else{
             this.grounded = false;
             this.airMove();
         }
@@ -88,7 +107,7 @@ class Player {
         if(!wishJump){
             applyFriction(1);
         }else{
-            applyFriction(0.02);
+            applyFriction(0);
         }
         wishdir.normalize(); 
         var wishSpeed = wishdir.mag();
@@ -185,6 +204,8 @@ class Player {
         var vel = createVector(this.velocity.x, this.velocity.y);
         text("Speed: " + vel.mag().toFixed(2), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 50 - (-this.position.y+(windowHeight/2)));
         text("Top Speed: " + topSpeed, (windowWidth-200) - (-this.position.x+(windowWidth/2)), 80 - (-this.position.y+(windowHeight/2)));
+        text("Height: " + this.position.z.toFixed(2), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 110 - (-this.position.y+(windowHeight/2)));
+        text("Score: " + Math.abs(this.position.y.toFixed(2)), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 140 - (-this.position.y+(windowHeight/2)));
     }
   }
 
