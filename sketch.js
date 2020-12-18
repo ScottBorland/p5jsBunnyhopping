@@ -70,7 +70,9 @@ function draw() {
 	hopper.update();
 
 	pop();
-	
+	if(hopper.position.z < -20){
+		location.reload();
+	}
 }
 
 function drawGrid(){
