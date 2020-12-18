@@ -205,7 +205,9 @@ class Player {
         text("Speed: " + vel.mag().toFixed(2), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 50 - (-this.position.y+(windowHeight/2)));
         text("Top Speed: " + topSpeed, (windowWidth-200) - (-this.position.x+(windowWidth/2)), 80 - (-this.position.y+(windowHeight/2)));
         text("Height: " + this.position.z.toFixed(2), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 110 - (-this.position.y+(windowHeight/2)));
+        if(this.grounded){
         text("Score: " + Math.abs(this.position.y.toFixed(2)), (windowWidth-200) - (-this.position.x+(windowWidth/2)), 140 - (-this.position.y+(windowHeight/2)));
+        }
     }
   }
 
