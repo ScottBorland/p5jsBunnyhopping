@@ -24,7 +24,7 @@ function setup() {
 	hopper = new Player(0, -100);
 	//var newPlatform = new Platform(i * random(100), i*random(100), 0, random(10, 1000), random(10, 1000));
 	platforms.push(new Platform(-100, -200, 0, 400, 400));
-	for(var j = 1; j < 10; j++){
+	for(var j = 1; j < 30; j++){
 		platforms.push(new Platform(-300, -100-(j*platGap), 0, 300, 300));
 		platforms.push(new Platform(200, -500-(j*platGap), 0, 300, 300));
 	}
@@ -70,9 +70,13 @@ function draw() {
 	hopper.update();
 
 	pop();
-	if(hopper.position.z < -20){
-		location.reload();
+	if(hopper.position.z < 0){
+		resetPlayer();
 	}
+}
+
+function resetPlayer(){
+	hopper = new Player(0, -100);
 }
 
 function drawGrid(){

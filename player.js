@@ -9,7 +9,7 @@ var runAcceleration = 14;
 var runDeacceleration = 10;
 
 var airAcceleration = 2;          // Air accel
-var airDecceleration = 2;         // Deacceleration experienced when ooposite strafing
+var airDecceleration = 2;         // Deacceleration experienced when opposite strafing
 var airControl = 0.3;               // How precise air control is
 var sideStrafeAcceleration = 50;  // How fast acceleration occurs to get up to sideStrafeSpeed when
 var sideStrafeSpeed = 1.0; 
@@ -87,9 +87,10 @@ class Player {
             this.grounded = true;
             this.position.z = 0;
             this.groundMove();
-        }else if(this.position.z < 0){
-            location.reload();
         }
+        // else if(this.position.z < 0){
+        //     // location.reload();
+        // }
         else{
             this.grounded = false;
             this.airMove();
